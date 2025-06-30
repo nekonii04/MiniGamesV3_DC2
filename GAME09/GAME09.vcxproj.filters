@@ -2,11 +2,25 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME09.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GAME09.h" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="INVADER.cpp" />
+    <ClCompile Include="BULLET.cpp" />
+    <ClCompile Include="INVADER_MANAGER.cpp" />
+    <ClCompile Include="ENEMY_BULLET.cpp" />
+    <ClCompile Include="BARRIER.cpp" />
+    <ClCompile Include="BARRIER_MANAGER.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game09\title.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GAME09.h" />
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="INVADER.h" />
+    <ClInclude Include="BULLET.h" />
+    <ClInclude Include="INVADER_MANAGER.h" />
+    <ClInclude Include="ENEMY_BULLET.h" />
+    <ClInclude Include="BARRIER.h" />
+    <ClInclude Include="BARRIER_MANAGER.h" />
   </ItemGroup>
 </Project>

@@ -133,13 +133,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BARRIER.cpp" />
+    <ClCompile Include="BARRIER_MANAGER.cpp" />
+    <ClCompile Include="BULLET.cpp" />
+    <ClCompile Include="ENEMY_BULLET.cpp" />
     <ClCompile Include="GAME09.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GAME09.h" />
+    <ClCompile Include="INVADER.cpp" />
+    <ClCompile Include="INVADER_MANAGER.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game09\title.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BARRIER.h" />
+    <ClInclude Include="BARRIER_MANAGER.h" />
+    <ClInclude Include="BULLET.h" />
+    <ClInclude Include="ENEMY_BULLET.h" />
+    <ClInclude Include="GAME09.h" />
+    <ClInclude Include="INVADER.h" />
+    <ClInclude Include="INVADER_MANAGER.h" />
+    <ClInclude Include="PLAYER.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
