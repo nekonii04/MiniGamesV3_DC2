@@ -66,8 +66,8 @@ namespace GAME09
 					out << highScore;
 					out.close();
 				}
-			}
 			saved = true;
+			}
 		}
 
 		// ゲームオーバー・クリア表示
