@@ -57,7 +57,7 @@ void INVADER_MANAGER::update(std::vector<BULLET>& bullets,float playerX, float p
     //“G‚Ì’e
     for (int i = 0; i < ROW; ++i) {
         for (int j = 0; j < COL; ++j) {
-            if (invaders[i][j].isAlive() && rand() % 700 == 0) {
+            if (invaders[i][j].isAlive() && rand() % 600 == 0) {
                 float bx = invaders[i][j].getX();
                 float by = invaders[i][j].getY();
                 enemyBullets.emplace_back(bx, by);
@@ -101,6 +101,7 @@ void INVADER_MANAGER::update(std::vector<BULLET>& bullets,float playerX, float p
             gameOver = true;
         }
     }
+    //“G‘S–Å
     bool allDead = true;
     for (int i = 0; i < ROW && allDead; ++i) {
         for (int j = 0; j < COL; ++j) {
