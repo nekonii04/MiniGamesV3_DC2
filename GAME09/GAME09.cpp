@@ -17,7 +17,7 @@ namespace GAME09
 		backImg = loadImage("../MAIN/assets/GAME09/backImg.png");
 
 		// ハイスコア読み込み
-		std::ifstream in("highscore.txt");
+		std::ifstream in("../MAIN/assets/GAME09/highscore.txt");
 		if (in.is_open()) {
 			in >> highScore;
 			in.close();
@@ -61,7 +61,7 @@ namespace GAME09
 		if ((gameOver || gameClear) && !saved) {
 			if (score > highScore) {
 				highScore = score;
-				std::ofstream out("highscore.txt");
+				std::ofstream out("../MAIN/assets/GAME09/highscore.txt");
 				if (out.is_open()) {
 					out << highScore;
 					out.close();
