@@ -34,7 +34,7 @@ public:
     void nextPhase();
     void draw();
     bool isAllDead();
-
+    
     std::vector<INVADER>& getInvaders() { return invaders; }     
     std::vector<ENEMY_BULLET>& getEnemyBullets() { return enemyBullets; }
 };
