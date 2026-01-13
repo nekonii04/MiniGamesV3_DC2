@@ -140,6 +140,7 @@
     <ClCompile Include="GAME09.cpp" />
     <ClCompile Include="INVADER.cpp" />
     <ClCompile Include="INVADER_MANAGER.cpp" />
+    <ClCompile Include="ITEM.cpp" />
     <ClCompile Include="PLAYER.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="GAME09.h" />
     <ClInclude Include="INVADER.h" />
     <ClInclude Include="INVADER_MANAGER.h" />
+    <ClInclude Include="ITEM.h" />
     <ClInclude Include="PLAYER.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

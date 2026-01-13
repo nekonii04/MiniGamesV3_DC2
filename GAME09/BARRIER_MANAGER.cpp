@@ -21,16 +21,35 @@ void BARRIER_MANAGER::create() {
     }
 }
 
-void BARRIER_MANAGER::update(std::vector<ENEMY_BULLET>& enemyBullets) {
+void BARRIER_MANAGER::update(std::vector<ENEMY_BULLET>& enemyBullets, std::vector<BULLET>& playerBullets, std::vector<INVADER>& invaders) {
 	for (auto& b : enemyBullets) {
 		if (b.isDead()) continue;
 		for (auto& barrier : barriers) {
-			if (barrier.checkHit(b.getX(), b.getY())) {
+			if (barrier.checkHit(b.getX(), b.getY())){
+                barrier.damage();
 				b.setDead();
 				break;
 			}
 		}
 	}
+    for (auto& b : playerBullets) {
+        if (b.isDead()) continue;
+        for (auto& barrier : barriers) {
+            if (barrier.checkHit(b.getX(), b.getY())) {
+                b.setDead();   // 弾だけ消す（バリアは削らない）
+                break;
+            }
+        }
+    }
+    for (auto& inv : invaders) {
+        if (!inv.isAlive()) continue;
+        for (auto& barrier : barriers) {
+            if (barrier.checkHit(inv.getX(), inv.getY())) {
+                barrier.damage();   // 敵は通過、バリアだけ削れる
+                break;
+            }
+        }
+    }
 }
 
 void BARRIER_MANAGER::draw() {

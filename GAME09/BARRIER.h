@@ -26,19 +26,20 @@ public:
         }
     }
 
+    void damage() {
+        if (hp > 0) hp--;
+    }
+
     bool isAlive() const {
         return hp > 0;
     }
-
     bool checkHit(float bx, float by) {
         if (!isAlive()) return false;
 
         float half = SIZE / 2;
-        if (bx >= x - half && bx <= x + half &&
-            by >= y - half && by <= y + half) {
-            hp--;
-            return true;
-        }
-        return false;
+        return (bx >= x - half && bx <= x + half &&
+            by >= y - half && by <= y + half);
     }
+    float getX() const { return x; }
+    float getY() const { return y; }
 };

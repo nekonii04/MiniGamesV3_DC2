@@ -2,21 +2,20 @@
 #include "../../libOne/inc/graphic.h"
 #include "INVADER.h"
 
-
-void INVADER::set(float x, float y, int image) {
+void INVADER::set(float x, float y, int image, float dir) {
     this->x = x;
     this->y = y;
     this->img = image;
     this->alive = true;
+    this->dir = dir;
 }
 
-void INVADER::update(float dx) {
-    if (alive) x += dx;
+void INVADER::update(float speed) {
+    if (alive)x += speed * dir;
 }
 
 void INVADER::draw() {
-    if (alive) {
-        
+    if (alive) {  
         image(img, x, y, 1.0f);
     }
 }
@@ -33,3 +32,4 @@ void INVADER::kill() { alive = false; }
 float INVADER::getX() const { return x; }
 float INVADER::getY() const { return y; }
 void INVADER::moveDown() { y += 60; }
+void INVADER::reverseDir() { dir = -dir;}

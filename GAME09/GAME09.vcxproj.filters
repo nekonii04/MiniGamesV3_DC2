@@ -9,6 +9,7 @@
     <ClCompile Include="ENEMY_BULLET.cpp" />
     <ClCompile Include="BARRIER.cpp" />
     <ClCompile Include="BARRIER_MANAGER.cpp" />
+    <ClCompile Include="ITEM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game09\title.txt" />
@@ -22,5 +23,6 @@
     <ClInclude Include="ENEMY_BULLET.h" />
     <ClInclude Include="BARRIER.h" />
     <ClInclude Include="BARRIER_MANAGER.h" />
+    <ClInclude Include="ITEM.h" />
   </ItemGroup>
 </Project>
