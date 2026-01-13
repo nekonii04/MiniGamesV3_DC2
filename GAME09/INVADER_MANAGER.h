@@ -17,7 +17,7 @@ private:
     int itemImg;
     int phase = 1;
     float invaderSpead = 1.0f;
-
+    
     const int ROW = 5;  // s”
     const int COL = 7; // —ñ”
 
