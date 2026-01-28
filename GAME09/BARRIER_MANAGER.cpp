@@ -13,7 +13,7 @@ void BARRIER_MANAGER::create() {
         float baseX = startX + i * (barrierWidth + spacing);
         for (int bx = 0; bx < 4; ++bx) {
             for (int by = 0; by < 3; ++by) {
-                BARRIER b;
+                GAME09::BARRIER b;
                 b.set(baseX + bx * 20, y + by * 20);
                 barriers.push_back(b);
             }

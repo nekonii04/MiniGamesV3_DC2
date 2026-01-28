@@ -2,6 +2,7 @@
 #include "../MAIN/MAIN.h"
 #include "GAME09.h"
 #include"PLAYER.h"
+#include "../MAIN/GAME_BASE.h"
 #include <string>
 #include <fstream>
 namespace GAME09
@@ -15,20 +16,13 @@ namespace GAME09
         image(img, VECTOR(0, 0), 0.0f, scale);
     }
 
-    enum GAME_STATE {
-        STATE_TITLE,
-        STATE_PLAY,
-        STATE_GAMEOVER,
-        STATE_CLEAR,
-        STATE_PHASE_START
-    };
 
     int GAME::create()
     {
         rectMode(CENTER);
         hideCursor();
         
-
+        bgm = loadSound("../MAIN/assets/GAME09/BGM.wav");
         backImg = loadImage("../MAIN/assets/GAME09/backImg.png");
 
         // ハイスコア読み込み
@@ -47,6 +41,7 @@ namespace GAME09
 
     void GAME::destroy()
     {
+        stopSound(bgm);
     }
 
     void GAME::resetGame() {
@@ -74,8 +69,7 @@ namespace GAME09
             }
         }
     }
-    void GAME::proc()
-    {
+    void GAME::proc(){
 
         switch (state) {
         case STATE_TITLE:
@@ -84,6 +78,9 @@ namespace GAME09
             fill(255);
             textSize(150);
             text("SPACE INVADERS", 450, 300);
+            textSize(50);
+            text(("HIGHSCORE : " + std::to_string(highScore)).c_str(), 1400, 50);
+
 
             textSize(60);
             text("Press ENTER to Start", 500, 600);
@@ -92,13 +89,17 @@ namespace GAME09
             text("操作説明:", 200, 750);
             text("← → : 移動", 200, 800);
             text("SPACE : ショット", 200, 850);
-            text("赤い弾 ：連射アイテム", 200, 900);
-            text("青い弾 ：加速アイテム", 200, 950);
-
-
+            text("赤い弾 ：連射アイテム・・・時間制限あり", 200, 900);
+            text("青い弾 ：加速アイテム・・・時間制限あり", 200, 950);
+            if (isTrigger(KEY_M)) {
+                main()->backToMenu();
+                return; 
+            }
             if (isTrigger(KEY_ENTER)) {
                 resetGame();
-                // ゲーム開始
+                playSound(bgm);
+                bgmPlaying = true;
+                bgmTimer = BGM_LENGTH;
                 state = STATE_PLAY;
             }
             break;
@@ -106,6 +107,13 @@ namespace GAME09
         case STATE_PLAY:
             clear(0, 0, 64);
             drawBackground(backImg);
+            if (bgmPlaying) {
+                bgmTimer--;
+                if (bgmTimer <= 0) {
+                    playSound(bgm);
+                    bgmTimer = BGM_LENGTH;
+                }
+            }
 
             if (!gameOver && !gameClear) {
                 player.update();
@@ -157,6 +165,9 @@ namespace GAME09
                 break;
 
         case STATE_GAMEOVER:
+            stopSound(bgm);
+            bgmPlaying = false;
+
             clear(0, 0, 64);
             drawBackground(backImg);
 
@@ -175,6 +186,9 @@ namespace GAME09
             break;
 
         case STATE_CLEAR:
+            stopSound(bgm);
+            bgmPlaying = false;
+
             clear(0, 0, 64);
             drawBackground(backImg);
 
