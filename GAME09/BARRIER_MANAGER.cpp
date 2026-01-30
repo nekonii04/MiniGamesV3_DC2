@@ -1,4 +1,7 @@
+
 #include "BARRIER_MANAGER.h"
+constexpr float INVADER_W = 32.0f;
+constexpr float INVADER_H = 32.0f;
 
 void BARRIER_MANAGER::create() {
     barriers.clear();
@@ -41,15 +44,31 @@ void BARRIER_MANAGER::update(std::vector<ENEMY_BULLET>& enemyBullets, std::vecto
             }
         }
     }
+    //for (auto& inv : invaders) {
+    //    if (!inv.isAlive()) continue;
+    //    for (auto& barrier : barriers) {
+    //        if (barrier.checkHit(inv.getX(), inv.getY())) {
+    //            barrier.damage();   // 敵は通過、バリアだけ削れる
+    //            break;
+    //        }
+    //    }
+    //}
     for (auto& inv : invaders) {
         if (!inv.isAlive()) continue;
+
         for (auto& barrier : barriers) {
-            if (barrier.checkHit(inv.getX(), inv.getY())) {
-                barrier.damage();   // 敵は通過、バリアだけ削れる
+            if (barrier.checkHitRect(
+                inv.getX(),
+                inv.getY(),
+                INVADER_W,
+                INVADER_H))
+            {
+                barrier.damage();
                 break;
             }
         }
     }
+
 }
 
 void BARRIER_MANAGER::draw() {

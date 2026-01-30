@@ -40,6 +40,8 @@ namespace GAME09 {
             return (bx >= x - half && bx <= x + half &&
                 by >= y - half && by <= y + half);
         }
+        bool checkHitRect(float x, float y, float w, float h);
+
         float getX() const { return x; }
         float getY() const { return y; }
     };

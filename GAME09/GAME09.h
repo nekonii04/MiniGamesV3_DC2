@@ -23,6 +23,7 @@ namespace GAME09
         bool phaseChanging = false;
         bool bgmPlaying = false;
 
+
         int score = 0;
         int highScore = 0;
         int backImg;
@@ -30,6 +31,9 @@ namespace GAME09
         int currentPhase = 1;
         int bgm;
         int bgmTimer = 0;
+        int clearBonus = 0;
+
+        float playTime = 0.0f;
 
         const int BGM_LENGTH = 60 * 98;
 

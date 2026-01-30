@@ -21,7 +21,7 @@ namespace GAME09
     {
         rectMode(CENTER);
         hideCursor();
-        
+
         bgm = loadSound("../MAIN/assets/GAME09/BGM.wav");
         backImg = loadImage("../MAIN/assets/GAME09/backImg.png");
 
@@ -45,9 +45,9 @@ namespace GAME09
     }
 
     void GAME::resetGame() {
-        player.load();              
-        invaderManager.reset();     
-        barrierManager.create();    
+        player.load();
+        invaderManager.reset();
+        barrierManager.create();
         score = 0;
         gameOver = false;
         gameClear = false;
@@ -55,7 +55,9 @@ namespace GAME09
         currentPhase = 1;
         phaseChanging = false;
         phaseStartTimer = 0;
-        
+
+        playTime = 0.0f;
+        clearBonus = 0;
     }
 
     void GAME::updateHighScore() {
@@ -64,12 +66,12 @@ namespace GAME09
 
             std::ofstream out("../MAIN/assets/GAME09/highscore.txt");
             if (out.is_open()) {
-                out << highScore;   
+                out << highScore;
                 out.close();
             }
         }
     }
-    void GAME::proc(){
+    void GAME::proc() {
 
         switch (state) {
         case STATE_TITLE:
@@ -91,9 +93,10 @@ namespace GAME09
             text("SPACE : ショット", 200, 850);
             text("赤い弾 ：連射アイテム・・・時間制限あり", 200, 900);
             text("青い弾 ：加速アイテム・・・時間制限あり", 200, 950);
+            text("Mキーでメニュー画面に戻る", 200, 1000);
             if (isTrigger(KEY_M)) {
                 main()->backToMenu();
-                return; 
+                return;
             }
             if (isTrigger(KEY_ENTER)) {
                 resetGame();
@@ -107,15 +110,15 @@ namespace GAME09
         case STATE_PLAY:
             clear(0, 0, 64);
             drawBackground(backImg);
-            if (bgmPlaying) {
-                bgmTimer--;
-                if (bgmTimer <= 0) {
-                    playSound(bgm);
-                    bgmTimer = BGM_LENGTH;
-                }
-            }
-
             if (!gameOver && !gameClear) {
+                playTime += 1.0f / 60.0f;
+                if (bgmPlaying) {
+                    bgmTimer--;
+                    if (bgmTimer <= 0) {
+                        playSound(bgm);
+                        bgmTimer = BGM_LENGTH;
+                    }
+                }
                 player.update();
                 invaderManager.update(player, player.getBullets(),
                     player.getX(), player.getY(),
@@ -128,12 +131,24 @@ namespace GAME09
                 if (!phaseChanging && invaderManager.isAllDead()) {
                     if (currentPhase == 3) {
                         gameClear = true;
+                        // ボーナス計算
+                        const float BEST_TIME = 150.0f;
+                        const int MAX_BONUS = 5000;
+
+                        float diff = playTime - BEST_TIME;
+
+                        if (diff <= 0) {
+                            clearBonus = MAX_BONUS;
+                        }
+                        else {
+                            clearBonus = (int)(MAX_BONUS - diff * 20);
+                            if (clearBonus < 0) clearBonus = 0;
+                        }
+                        score += clearBonus;
                         updateHighScore();
                         state = STATE_CLEAR;
                         return;
                     }
-
-                    
                     updateHighScore();
                     currentPhase++;
                     phaseChanging = true;
@@ -150,8 +165,9 @@ namespace GAME09
                 // スコア表示
                 fill(255);
                 textSize(40);
-                text(("SCORE: " + std::to_string(score)).c_str(), 1600, 50);
-                text(("HIGHSCORE: " + std::to_string(highScore)).c_str(), 1600, 100);
+                text(("TIME: " + std::to_string((int)playTime)).c_str(), 1600, 50);
+                text(("SCORE: " + std::to_string(score)).c_str(), 1600, 100);
+                text(("HIGHSCORE: " + std::to_string(highScore)).c_str(), 1600, 150);
 
                 // 終了チェック
                 if (gameOver) {
@@ -192,20 +208,23 @@ namespace GAME09
             clear(0, 0, 64);
             drawBackground(backImg);
 
+            textSize(50);
+            fill(255);
+            text(("TIME : " + std::to_string(playTime) + " sec").c_str(), 650, 700);
+            text(("BONUS : " + std::to_string(clearBonus)).c_str(), 650, 760);
+
             fill(0, 255, 0);
             textSize(200);
             text("GAME CLEAR!", 540, 540);
 
             textSize(60);
             fill(255);
-            text("Press ENTER to Title", 500, 800);
-
+            text("Press ENTER to Title", 500, 810);
 
             if (isTrigger(KEY_ENTER)) {
                 state = STATE_TITLE;
             }
             break;
-
         case STATE_PHASE_START:
             clear(0, 0, 64);
             drawBackground(backImg);
